@@ -4,3 +4,10 @@ user_id = api.user(user_id='1921850126')
 print dir(user_id)
 realizuyus
 1058427930
+
+"location":  {
+"latitude": 49.582499582,
+"name": "Poltava City",
+"longitude": 34.491423909,
+"id": 239332092
+},
