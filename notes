@@ -1,0 +1,6 @@
+id, geotag, country
+(u'1921850126.bc3f22e.8c4d1961e2614eca8bdbd0f64ff34e23', {u'username': u'most.hot', u'bio': u'', u'website': u'', u'profile_picture': u'https://scontent.cdninstagram.com/hphotos-xaf1/t51.2885-19/s150x150/11325061_1462548604064600_908207261_a.jpg', u'full_name': u'', u'id': u'1921850126'})
+user_id = api.user(user_id='1921850126')
+print dir(user_id)
+realizuyus
+1058427930
