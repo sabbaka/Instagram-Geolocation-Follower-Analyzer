@@ -4,6 +4,7 @@ from follower import Follower
 
 from instadb import geo_table
 from instadb import Session
+from geopy.geocoders import Nominatim
 
 
 def followers_from_db():
@@ -22,3 +23,10 @@ def load_geos_test():
     for follower in session.query(Follower).order_by(Follower.user_id):
         follower.geotag = get_geos(follower.user_id)
     session.commit()
+
+
+def locate_country(latitude, longitude):
+    geo_locator = Nominatim()
+    location = geo_locator.reverse(query=(latitude, longitude), language='en')
+    if location != None:
+        return location.raw['address']['country']
