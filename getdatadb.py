@@ -18,6 +18,12 @@ def test_func():
         print follower
 
 
+def with_country():
+    session = Session()
+    for follower in session.query(Follower).filter(Follower.country != None).all():
+        print follower
+
+
 def load_geos_test():
     session = Session()
     for follower in session.query(Follower).order_by(Follower.user_id):
@@ -25,8 +31,22 @@ def load_geos_test():
     session.commit()
 
 
+def set_country():
+    session = Session()
+    for follower in session.query(Follower).order_by(Follower.user_id):
+        if hasattr(follower, 'latitude') and hasattr(follower, 'longitude') and follower.country is None:
+            country = locate_country(follower.latitude, follower.longitude)
+            if country:
+                follower.country = country
+                session.commit()
+
+
 def locate_country(latitude, longitude):
     geo_locator = Nominatim()
     location = geo_locator.reverse(query=(latitude, longitude), language='en')
     if location != None:
-        return location.raw['address']['country']
+        try:
+            print location
+            return location.raw['address']['country']
+        except:
+            return False
