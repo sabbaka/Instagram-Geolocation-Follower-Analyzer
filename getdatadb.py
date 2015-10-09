@@ -5,6 +5,7 @@ from follower import Follower
 from instadb import geo_table
 from instadb import Session
 from geopy.geocoders import Nominatim
+from sqlalchemy import func
 
 
 def followers_from_db():
@@ -21,7 +22,10 @@ def test_func():
 def with_country():
     session = Session()
     for follower in session.query(Follower).filter(Follower.country != None).all():
-        print follower
+        print follower.country
+    count = session.query(Follower.country, func.count(Follower.country)).group_by(Follower.country).all()
+    for el in count:
+        print el[0], el[1]
 
 
 def load_geos_test():
