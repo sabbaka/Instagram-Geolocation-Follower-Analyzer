@@ -1,10 +1,15 @@
 import multiprocessing as mps
 from lib import api
+from follower import Follower
+from instadb import Session
 
+session = Session()
 
 def parse_follower(follower_info):
     # do some hard work here
-    return follower_info.username
+    session.add(Follower(user_id=follower_info.id))
+    session.commit()
+    return follower_info.id
 
 
 def followers_iter(user_id):
