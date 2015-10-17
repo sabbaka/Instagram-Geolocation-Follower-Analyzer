@@ -2,14 +2,20 @@ import multiprocessing as mps
 from lib import api
 from follower import Follower
 from instadb import Session
+from lib import get_geos
+from getdatadb import locate_country
 
 session = Session()
 
 def parse_follower(follower_info):
-    # do some hard work here
-    session.add(Follower(user_id=follower_info.id))
-    session.commit()
-    return follower_info.id
+    location = get_geos(follower_info.id)
+    if hasattr(location, 'point'):
+        if(location.point != None):
+            follower_info.latitude = location.point.latitude
+            follower_info.longitude = location.point.longitude
+            follower_info.country = locate_country(follower_info.latitude, follower_info.longitude)
+            return follower_info
+    return False
 
 
 def followers_iter(user_id):
@@ -38,5 +44,12 @@ def get_followers_info(user_id):
 if __name__ == "__main__":
 
     for info in get_followers_info(user_id=1921850126):
-        # do something with data which parsed by parse_follower
-        print info
+        if info is not False:
+            # do something with data which parsed by parse_follower
+            flw = Follower(user_id=info.id)
+            flw.latitude = info.latitude
+            flw.longitude = info.longitude
+            flw.country = info.country
+            session.add(flw)
+            session.commit()
+            print info
