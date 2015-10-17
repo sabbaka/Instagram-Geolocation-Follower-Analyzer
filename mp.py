@@ -8,15 +8,17 @@ from getdatadb import locate_country
 session = Session()
 
 def parse_follower(follower_info):
-    location = get_geos(follower_info.id)
-    if hasattr(location, 'point'):
-        if(location.point != None):
-            # follower_info.country = location.point.latitude
-            follower_info.latitude = location.point.latitude
-            follower_info.longitude = location.point.longitude
-            # follower_info.country = locate_country(follower_info.latitude, follower_info.longitude)
-            # follower_info.country = locate_country(location.point.latitude, location.point.longitude)
-            return follower_info
+    flw = session.query(Follower).filter(Follower.user_id==follower_info.id).first()
+    if flw is None:
+        location = get_geos(follower_info.id)
+        if hasattr(location, 'point'):
+            if(location.point != None):
+                # follower_info.country = location.point.latitude
+                follower_info.latitude = location.point.latitude
+                follower_info.longitude = location.point.longitude
+                # follower_info.country = locate_country(follower_info.latitude, follower_info.longitude)
+                # follower_info.country = locate_country(location.point.latitude, location.point.longitude)
+                return follower_info
     return False
 
 

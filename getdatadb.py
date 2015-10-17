@@ -47,7 +47,7 @@ def set_country():
 
 def locate_country(latitude, longitude):
     geo_locator = Nominatim()
-    location = geo_locator.reverse(query=(latitude, longitude), language='en')
+    location = geo_locator.reverse(query=(latitude, longitude), language='en', timeout=120)
     if location != None:
         try:
             # print location
