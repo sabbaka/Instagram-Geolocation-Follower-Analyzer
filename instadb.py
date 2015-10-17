@@ -9,8 +9,8 @@ engine = create_engine('sqlite:///foo.db', echo=True)
 metadata = MetaData()
 
 geo_table = Table('geo_table', metadata,
+            Column('owner', Integer, primary_key=True),
             Column('user_id', Integer, primary_key=True),
-            Column('location_id', String),
             Column('latitude', String),
             Column('longitude', String),
             Column('country', String)

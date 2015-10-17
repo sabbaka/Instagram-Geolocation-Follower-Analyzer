@@ -3,12 +3,12 @@ from lib import api
 from follower import Follower
 from instadb import Session
 from lib import get_geos
-from getdatadb import locate_country
+import sys
 
 session = Session()
 
 def parse_follower(follower_info):
-    flw = session.query(Follower).filter(Follower.user_id==follower_info.id).first()
+    flw = session.query(Follower).filter(Follower.user_id==follower_info.id, Follower.owner == sys.argv[-1]).first()
     if flw is None:
         location = get_geos(follower_info.id)
         if hasattr(location, 'point'):
@@ -46,16 +46,17 @@ def get_followers_info(user_id):
 
 
 if __name__ == "__main__":
-
-    for info in get_followers_info(user_id=1921850126):
-        if info is not False:
-            # do something with data which parsed by parse_follower
-            flw = Follower(user_id=info.id)
-            flw.latitude = info.latitude
-            flw.longitude = info.longitude
-            # flw.country = info.country
-            # session.add(Follower(user_id=info.id,country=info.country))
-            # session.commit()
-            session.add(flw)
-            session.commit()
-            print info
+    if len(sys.argv) >= 1:
+        # for info in get_followers_info(user_id=1921850126):
+        for info in get_followers_info(user_id=sys.argv[-1]):
+            if info is not False:
+                # do something with data which parsed by parse_follower
+                flw = Follower(user_id=info.id, owner=sys.argv[-1])
+                flw.latitude = info.latitude
+                flw.longitude = info.longitude
+                # flw.country = info.country
+                # session.add(Follower(user_id=info.id,country=info.country))
+                # session.commit()
+                session.add(flw)
+                session.commit()
+                print info
