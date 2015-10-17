@@ -50,7 +50,7 @@ def locate_country(latitude, longitude):
     location = geo_locator.reverse(query=(latitude, longitude), language='en')
     if location != None:
         try:
-            print location
+            # print location
             return location.raw['address']['country']
         except:
             return False

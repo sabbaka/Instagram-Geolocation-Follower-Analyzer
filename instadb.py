@@ -4,7 +4,7 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import mapper
 from follower import Follower
 
-engine = create_engine('sqlite:///foo.db')
+engine = create_engine('sqlite:///foo.db', echo=True)
 
 metadata = MetaData()
 

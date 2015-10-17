@@ -11,9 +11,11 @@ def parse_follower(follower_info):
     location = get_geos(follower_info.id)
     if hasattr(location, 'point'):
         if(location.point != None):
+            # follower_info.country = location.point.latitude
             follower_info.latitude = location.point.latitude
             follower_info.longitude = location.point.longitude
-            follower_info.country = locate_country(follower_info.latitude, follower_info.longitude)
+            # follower_info.country = locate_country(follower_info.latitude, follower_info.longitude)
+            # follower_info.country = locate_country(location.point.latitude, location.point.longitude)
             return follower_info
     return False
 
@@ -49,7 +51,9 @@ if __name__ == "__main__":
             flw = Follower(user_id=info.id)
             flw.latitude = info.latitude
             flw.longitude = info.longitude
-            flw.country = info.country
+            # flw.country = info.country
+            # session.add(Follower(user_id=info.id,country=info.country))
+            # session.commit()
             session.add(flw)
             session.commit()
             print info

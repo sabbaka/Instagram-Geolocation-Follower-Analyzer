@@ -35,12 +35,12 @@ def get_geos_for_followers(followed_by):
 def get_geos(user_id):
     try:
         recent_media, next_ = api.user_recent_media(user_id=user_id,count='10')
-        print recent_media
+        # print recent_media
         for media in recent_media:
             if hasattr(media, 'location'):
-                print media.location
+                # print media.location
                 return media.location
     except InstagramAPIError as e:
        if (e.status_code == 400):
-          print "User is set to private."
+          # print "User is set to private."
           return "User is set to private."
