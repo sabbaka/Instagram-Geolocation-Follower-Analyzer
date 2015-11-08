@@ -1,9 +1,19 @@
 import multiprocessing as mps
+from instagram.client import InstagramAPI
 from lib import api
 from follower import Follower
 from instadb import Session
 from lib import get_geos
 import sys
+from random import randint
+
+
+apis = [InstagramAPI(client_id='bc3f22e5807c4e5aa9e1c9e5bf391f77', client_secret='4f88a95213ae4e57a70f318b7f6ac81c'),
+       InstagramAPI(client_id='ade077a508f241b599aa55d924730a10', client_secret='85a2c94c85d844b79d39e86e7d8d84a7')]
+
+api = apis[randint(0, len(apis) - 1)]
+
+print api
 
 session = Session()
 
