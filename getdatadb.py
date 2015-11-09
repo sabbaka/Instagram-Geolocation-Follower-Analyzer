@@ -54,3 +54,13 @@ def locate_country(latitude, longitude):
             return location.raw['address']['country']
         except:
             return False
+
+def locate_country_code(latitude, longitude):
+    geo_locator = Nominatim()
+    location = geo_locator.reverse(query=(latitude, longitude), language='en', timeout=120)
+    if location != None:
+        try:
+            # print location
+            return location.raw['address']['country_code']
+        except:
+            return False
