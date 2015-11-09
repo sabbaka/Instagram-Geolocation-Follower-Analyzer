@@ -13,7 +13,8 @@ geo_table = Table('geo_table', metadata,
             Column('user_id', Integer, primary_key=True),
             Column('latitude', String),
             Column('longitude', String),
-            Column('country', String)
+            Column('country', String),
+            Column('code', String)
             )
 
 metadata.create_all(engine)
