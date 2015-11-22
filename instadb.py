@@ -14,7 +14,8 @@ geo_table = Table('geo_table', metadata,
             Column('latitude', String),
             Column('longitude', String),
             Column('country', String),
-            Column('code', String)
+            Column('code', String),
+            Column('followers_count', String)
             )
 
 metadata.create_all(engine)

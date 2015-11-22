@@ -13,14 +13,15 @@ apis = [InstagramAPI(client_id='bc3f22e5807c4e5aa9e1c9e5bf391f77', client_secret
 
 api = apis[randint(0, len(apis) - 1)]
 
-print api
-
 session = Session()
 
 def parse_follower(follower_info):
     flw = session.query(Follower).filter(Follower.user_id==follower_info.id, Follower.owner == sys.argv[-1]).first()
     if flw is None:
         location = get_geos(follower_info.id)
+        user = api.user(user_id=follower_info.id)
+        if 'counts' in user:
+            follower_info.followers_count = user.counts['followed_by']
         if hasattr(location, 'point'):
             if(location.point != None):
                 # follower_info.country = location.point.latitude
@@ -71,3 +72,5 @@ if __name__ == "__main__":
                 session.commit()
                 execfile("lcountry.py")
                 print info
+    else:
+        print 'Provide Instagram user ID to start parsing his followers.'
