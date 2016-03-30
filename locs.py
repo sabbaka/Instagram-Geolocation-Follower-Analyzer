@@ -7,9 +7,13 @@ import numpy as np
 
 coordinates = list(product(np.arange(50.40,50.47,0.005), np.arange(30.47,30.60,0.005)))
 
+print coordinates
+
 locations_list = api.location_search(lat=coordinates[0][0],lng=coordinates[0][1])
 
-for coord in coordinates:
-    locations_list = api.location_search(lat=coord[0],lng=coord[1])
-    for location in locations_list:
-        print location.id
+# print locations_list
+
+# for coord in coordinates:
+#     locations_list = api.location_search(lat=coord[0],lng=coord[1])
+#     for location in locations_list:
+#         print location.id
