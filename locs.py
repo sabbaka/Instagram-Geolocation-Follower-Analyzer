@@ -5,15 +5,19 @@ api = InstagramAPI(client_id='ade077a508f241b599aa55d924730a10', client_secret='
 from itertools import product
 import numpy as np
 
-coordinates = list(product(np.arange(50.40,50.47,0.005), np.arange(30.47,30.60,0.005)))
+coordinates = list(product(np.arange(50.40,50.47,0.005), np.arange(30.47,30.60,0.001)))
 
 print coordinates
 
-locations_list = api.location_search(lat=coordinates[0][0],lng=coordinates[0][1])
+users = set()
 
-# print locations_list
-
-# for coord in coordinates:
-#     locations_list = api.location_search(lat=coord[0],lng=coord[1])
-#     for location in locations_list:
-#         print location.id
+for coord in coordinates:
+    try:
+        locations_list = api.location_search(lat=coord[0],lng=coord[1])
+        for location in locations_list:
+            medias = api.location_recent_media(location_id=location.id)[0]
+            for media in medias:
+                users.pop
+                print media.user
+    except:
+        pass
