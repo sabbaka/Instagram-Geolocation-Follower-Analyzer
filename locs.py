@@ -17,7 +17,6 @@ for coord in coordinates:
         for location in locations_list:
             medias = api.location_recent_media(location_id=location.id)[0]
             for media in medias:
-                users.pop
                 print media.user
     except:
         pass
