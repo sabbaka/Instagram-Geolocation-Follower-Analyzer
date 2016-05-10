@@ -1,5 +1,7 @@
 from instagram.client import InstagramAPI
 import pickle
+from genderize import Genderize
+from transliterate import translit, get_available_language_codes
 
 api = InstagramAPI(client_id='ade077a508f241b599aa55d924730a10', client_secret='85a2c94c85d844b79d39e86e7d8d84a7')
 
@@ -33,6 +35,22 @@ def search_people(locations):
     f = open('kiev_users.txt', 'w')
     pickle.dump(users, f)
     return users
+
+def find_gender():
+    f = open('kiev_users.txt', 'r')
+    users = pickle.load(f)
+    for user in users:
+        gender = None
+        user.full_name = translit(user.full_name, 'ru', reversed=True)
+        result = Genderize().get(user.full_name.split())
+        for item in result:
+            # print user.full_name, item['gender']
+            # print item['gender']
+            # if 'probability' in item:
+            #     print item['probability']
+            if item['gender'] == 'female' or item['gender'] == 'male':
+                gender = item['gender']
+        print user.full_name, gender
 
 
 # def locs_parse():
